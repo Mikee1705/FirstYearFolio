@@ -29,28 +29,57 @@ public class VerySimpleCalculator {
                 operator = console.next().charAt(0);
             } while (!(operator=='+'||operator=='-'||operator=='/'||operator=='%'||operator=='*'));
         
-            int ctr =0;
             System.out.println("\nEnter 2 numbers: ");
-            do // loop for number input, makes use of arrays, lentgth is 2
-            {            
-                System.out.printf("Value #%d: ",ctr+1);
-                numInputs[ctr] = console.nextDouble();
-                ctr++;
-            } while (ctr<2);
+            for(int i=0; i<numInputs.length;i++)
+            {
+                System.out.printf("Value #%d: ",i+1);
+                numInputs[i] = console.nextDouble();
+            }
         
             switch (operator) 
             {
                 case '+':
-                    System.out.println("Sum: "+(numInputs[0] + numInputs[1])); break;
+                    System.out.println("Sum: "+addition(numInputs[0],numInputs[1])); break;
                 case '-':
-                    System.out.println("Difference: "+(numInputs[0] - numInputs[1])); break;
+                    System.out.println("Difference: "+subtraction(numInputs[0],numInputs[1])); break;
                 case '*':
-                    System.out.println("Product: "+(numInputs[0] * numInputs[1])); break;
+                    System.out.println("Product: "+multiplication(numInputs[0],numInputs[1])); break;
                 case '/':
-                    System.out.println("Quotient: "+(numInputs[0] / numInputs[1])); break;
+                    System.out.println("Quotient: "+division(numInputs[0],numInputs[1])); break;
+                case '%':
+                    System.out.println("Remainder: "+modulo(numInputs[0],numInputs[1]));
             }
-            System.out.println("\nDo you want to continue? Y/N");
-            flag = Character.toUpperCase(console.next().charAt(0));
+            //checks if user wants to continue.
+            do
+            {
+                System.out.println("\nDo you want to continue? Y/N");
+                flag = Character.toUpperCase(console.next().charAt(0));
+            } while (!(flag=='Y'||flag=='N'));
         } while (!(flag=='N'));
+    }
+    
+    public static double addition(double num1, double num2)
+    {
+        return num1+num2;
+    }
+    
+    public static double subtraction(double num1, double num2)
+    {
+        return num1-num2;
+    }
+    
+    public static double multiplication(double num1, double num2)
+    {
+        return num1*num2;
+    }
+    
+    public static double division(double num1, double num2)
+    {
+        return num1/num2;
+    }
+    
+    public static double modulo(double num1, double num2)
+    {
+        return num1%num2;
     }
 }
