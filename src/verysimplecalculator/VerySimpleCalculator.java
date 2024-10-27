@@ -36,7 +36,20 @@ public class VerySimpleCalculator {
                 numInputs[i] = console.nextDouble();
             }
         
-            switch (operator) 
+            ArithmeticOperation(operator, numInputs);
+            
+            //checks if user wants to continue.
+            do
+            {
+                System.out.println("\nDo you want to continue? Y/N");
+                flag = Character.toUpperCase(console.next().charAt(0));
+            } while (!(flag=='Y'||flag=='N'));
+        } while (!(flag=='N'));
+    }
+    
+    public static void ArithmeticOperation(char operator, double [] numInputs)
+    {
+        switch (operator) 
             {
                 case '+':
                     System.out.println("Sum: "+addition(numInputs[0],numInputs[1])); break;
@@ -45,17 +58,11 @@ public class VerySimpleCalculator {
                 case '*':
                     System.out.println("Product: "+multiplication(numInputs[0],numInputs[1])); break;
                 case '/':
-                    System.out.println("Quotient: "+division(numInputs[0],numInputs[1])); break;
+                    division(numInputs[0], numInputs[1]); break;
+                    //Add warning for division by Zero
                 case '%':
                     System.out.println("Remainder: "+modulo(numInputs[0],numInputs[1]));
             }
-            //checks if user wants to continue.
-            do
-            {
-                System.out.println("\nDo you want to continue? Y/N");
-                flag = Character.toUpperCase(console.next().charAt(0));
-            } while (!(flag=='Y'||flag=='N'));
-        } while (!(flag=='N'));
     }
     
     public static double addition(double num1, double num2)
@@ -73,9 +80,12 @@ public class VerySimpleCalculator {
         return num1*num2;
     }
     
-    public static double division(double num1, double num2)
+    public static void division(double num1, double num2)
     {
-        return num1/num2;
+        if(num2==0)
+            System.out.println("Division by Zero is not allowed!");
+        else 
+            System.out.println("Division: "+(num1/num2));
     }
     
     public static double modulo(double num1, double num2)
