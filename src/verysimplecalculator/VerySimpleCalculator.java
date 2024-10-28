@@ -14,40 +14,46 @@ package verysimplecalculator;
 import java.util.Scanner;
 
 public class VerySimpleCalculator {
-    static char operator, flag;
+    static char operator, response;
+    static boolean flag;
+    static Scanner console = new Scanner(System.in);
+    static double[] numInputs = new double[2];
+    
     public static void main(String[] args) {
-        double[] numInputs = new double[2];
-        Scanner console = new Scanner(System.in);
         System.out.println("\t My First Calculator App");
         System.out.println("\t VERSION 1\n");
-        
-        do //outer loop, checks if you want to continue the code excution
-        {            
-            do //gets which operator that you will use
+        do
+        {
+            getOperator();
+            getNumbers();
+            arithmeticOperation(operator, numInputs);
+        } while (!(programRetry()==false));
+    }
+    
+    //Gets user input, return char operator
+    public static char getOperator()
+    {
+         do 
             {            
                 System.out.println("Enter operator (+ - / % *)");
                 operator = console.next().charAt(0);
             } while (!(operator=='+'||operator=='-'||operator=='/'||operator=='%'||operator=='*'));
-        
-            System.out.println("\nEnter 2 numbers: ");
+         return operator;
+    }
+    
+    public static double [] getNumbers()
+    {
+         System.out.println("\nEnter 2 numbers: ");
             for(int i=0; i<numInputs.length;i++)
             {
                 System.out.printf("Value #%d: ",i+1);
                 numInputs[i] = console.nextDouble();
             }
-        
-            ArithmeticOperation(operator, numInputs);
-            
-            //checks if user wants to continue.
-            do
-            {
-                System.out.println("\nDo you want to continue? Y/N");
-                flag = Character.toUpperCase(console.next().charAt(0));
-            } while (!(flag=='Y'||flag=='N'));
-        } while (!(flag=='N'));
+        return numInputs;
     }
     
-    public static void ArithmeticOperation(char operator, double [] numInputs)
+    //Outputs the operation
+    public static void arithmeticOperation(char operator, double [] numInputs)
     {
         switch (operator) 
             {
@@ -61,10 +67,11 @@ public class VerySimpleCalculator {
                     division(numInputs[0], numInputs[1]); break;
                     //Add warning for division by Zero
                 case '%':
-                    System.out.println("Remainder: "+modulo(numInputs[0],numInputs[1]));
+                    System.out.println("Remainder: "+modulo(numInputs[0],numInputs[1])); break;
             }
     }
     
+    //Arithmetic Operations
     public static double addition(double num1, double num2)
     {
         return num1+num2;
@@ -91,5 +98,23 @@ public class VerySimpleCalculator {
     public static double modulo(double num1, double num2)
     {
         return num1%num2;
+    }
+    
+    //method for program continuation, gets char input, returns boolean 
+    public static boolean programRetry()
+    {
+        do
+            {
+                System.out.println("\nDo you want to continue? Y/N");
+                response = Character.toUpperCase(console.next().charAt(0));
+                if(response=='Y')
+                    flag = true;
+                else
+                {
+                    flag= false;
+                    System.out.println("Program Terminated!");
+                }
+            } while (!(response=='Y'||response=='N'));
+        return flag;
     }
 }
